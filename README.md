@@ -42,24 +42,21 @@ Seaborn & Matplotlib – Static plots and styling
 🚀 How to Run the App
 Clone the repository:
 
-bash
-Copy
-Edit
+bash-
+
 git clone https://github.com/yourusername/heart-disease-dashboard.git
 cd heart-disease-dashboard
 
 Install dependencies:
 
-bash
-Copy
-Edit
+bash -
+
 pip install -r requirements.txt
 
 Run the Streamlit app:
 
-bash
-Copy
-Edit
+bash -
+
 streamlit run app.py
 
 📌 Future Enhancements
