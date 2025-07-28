@@ -19,29 +19,33 @@ with header:
 with dataprocess:
     file=st.file_uploader('UPLOAD DATASET HERE',['xlx','xlsx','csv','txt','json'])
     
-    def func_load(file):
-        if file:
-            if file.name.endswith('.csv'):
-                data = pd.read_csv(file)
-            elif file.name.endswith(('.xls', '.xlsx')):
-                data = pd.read_excel(file)
-            elif file.name.endswith('.json'):
-                data = pd.read_json(file)
-            elif file.name.endswith('.txt'):
-                data = pd.read_csv(file, delimiter='\t')
-            else:
-                st.error("Unsupported file format")
-                data = None
-            return data
-        else:
-            data = pd.read_csv("C:/Users/sa539/Downloads/heart.csv")
-            return data
-
-        
-    try:
-        df = func_load(file)
-    except Exception as e:
-        st.error(f"Failed to load file: {e}")
+      def func_load(file):
+          data = None
+          try:
+              if file:
+                  if file.name.endswith('.csv'):
+                      data = pd.read_csv(file)
+                  elif file.name.endswith(('.xls', '.xlsx')):
+                      data = pd.read_excel(file)
+                  elif file.name.endswith('.json'):
+                      data = pd.read_json(file)
+                  elif file.name.endswith('.txt'):
+                      data = pd.read_csv(file, delimiter='\t')
+                  else:
+                      st.warning("⚠ Unsupported file format")
+              else:
+            # Attempt to load local fallback
+                  fallback_path = "C:/Users/sa539/Downloads/heart.csv"
+                  try:
+                      data = pd.read_csv(fallback_path)
+                  except FileNotFoundError:
+                      pass  # Silent if local file is also missing
+          except Exception as e:
+              st.warning(f"⚠ Something went wrong while loading the file: {e}")
+          return data
+    
+    
+    df=func_load(file)
     
     #data cleanig and making it more redable
 
