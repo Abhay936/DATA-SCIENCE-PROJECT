@@ -49,24 +49,42 @@ cd heart-disease-dashboard
 
 Install dependencies:
 
-bash -
+✅ Full Steps: Run Streamlit App in GitHub Codespaces
+🧩 Prerequisites
+You must be signed in to GitHub
 
+Your repo should include:
+
+a .py file with import streamlit as st
+
+a requirements.txt file with necessary packages
+
+🔹 Step-by-Step Commands to Run Streamlit in Codespaces
+🔸 1. Open Codespace
+From your GitHub repo page:
+
+https://github.com/Abhay936/DATA-SCIENCE-PROJECT
+
+Click the green “Code” button
+
+Click “Codespaces” tab
+
+Click “+ Create codespace on main”
+
+Wait for the container to start (it opens in browser like VS Code).
+
+🔸 2. In the Terminal (inside Codespace):
+Run these commands:
+
+bash
+Copy
+Edit
+# (optional) create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # for Linux-based Codespaces
+
+# Install dependencies
 pip install -r requirements.txt
 
-Run the Streamlit app:
-
-bash -
-
+# Run Streamlit app (replace with your actual .py file)
 streamlit run app.py
-
-📌 Future Enhancements
-Add predictive modeling (e.g., Logistic Regression, Random Forest)
-
-Display key metrics using Streamlit metric() component
-
-Add more filtering and download options
-
-🙏 Acknowledgments
-Kaggle - Heart Disease UCI Dataset
-
-Inspired by medical data analytics and real-world health dashboard solutions
