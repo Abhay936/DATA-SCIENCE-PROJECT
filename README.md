@@ -79,12 +79,22 @@ Run these commands:
 bash
 Copy
 Edit
-# (optional) create and activate a virtual environment
+(optional) create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate  # for Linux-based Codespaces
 
-# Install dependencies
+Install dependencies
 pip install -r requirements.txt
 
-# Run Streamlit app (replace with your actual .py file)
+Run Streamlit app (replace with your actual .py file)
 streamlit run app.py
+
+or do with this 
+
+git clone https://github.com/Abhay936/DATA-SCIENCE-PROJECT.git
+cd DATA-SCIENCE-PROJECT
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py  # or main.py, dashboard.py, etc.
+
