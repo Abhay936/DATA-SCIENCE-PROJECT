@@ -19,7 +19,7 @@ with header:
 with dataprocess:
     file=st.file_uploader('UPLOAD DATASET HERE',['xlx','xlsx','csv','txt','json'])
     
-      def func_load(file):
+    def func_load(file):
           data = None
           try:
               if file:
@@ -35,7 +35,7 @@ with dataprocess:
                       st.warning("⚠ Unsupported file format")
               else:
             # Attempt to load local fallback
-                  fallback_path = "C:/Users/sa539/Downloads/heart.csv"
+                  fallback_path = "data/heart.csv"
                   try:
                       data = pd.read_csv(fallback_path)
                   except FileNotFoundError:
@@ -47,18 +47,21 @@ with dataprocess:
     
     df=func_load(file)
     
+
     #data cleanig and making it more redable
-
-
-    df=df.dropna(subset=['age'])
-    df['sex'] = df['sex'].replace({1: 'M', 0: 'F'})
-    df['cp'] = df['cp'].map({
-    0: 'Typical Angina',
-    1: 'Atypical Angina',
-    2: 'Non-anginal Pain',
-    3: 'Asymptomatic'})
-    df['target'] = df['target'].map({1: 'Disease', 0: 'No Disease'})
-    df1=df
+    if df is not None:
+        df=df.dropna(subset=['age'])
+        df['sex'] = df['sex'].replace({1: 'M', 0: 'F'})
+        df['cp'] = df['cp'].map({
+            0: 'Typical Angina',
+            1: 'Atypical Angina',
+            2: 'Non-anginal Pain',
+            3: 'Asymptomatic'})
+        df['target'] = df['target'].map({1: 'Disease', 0: 'No Disease'})
+        df1=df
+    else:
+        st.error("❌ No dataset loaded. Please upload a file or check fallback path.")
+        st.stop()
 
 
 with st.sidebar:
@@ -165,29 +168,29 @@ with datavisual:
     with col3:
         
         fig1=px.bar(df.groupby([uni_cat_plot,'target']).size().reset_index(name='count'),x=uni_cat_plot,y='count',barmode='group',color='target',title=f'Heart Disease Count by {uni_cat_plot}',text='count')
-        st.plotly_chart(fig1,use_max_width=True)
+        st.plotly_chart(fig1, use_container_width=True, config={"responsive": True})
 
     with col4:
 
         fig1=px.histogram(df,x=uni_num_plot,nbins=10,color='target',title=f'Heart Disease Count by {uni_num_plot}')
-        st.plotly_chart(fig1,use_max_width=True)
+        st.plotly_chart(fig1, use_container_width=True, config={"responsive": True})
 
     fig1=px.box(df,y=uni_num_box,points='all',color='target',title=f'Heart Disease Distribution by {uni_num_box}')
-    st.plotly_chart(fig1,use_max_width=True)
+    st.plotly_chart(fig1, use_container_width=True, config={"responsive": True})
 
 
     col5,col6=st.columns(2)
     with col5:
         if toggle_age_chol:
             fig1=px.violin(df,y='age',x='target',title='Age Distribution Over Target')
-            st.plotly_chart(fig1,use_max_width=True)
+            st.plotly_chart(fig1, use_container_width=True, config={"responsive": True})
         else:
             fig1=px.violin(df,y='chol',x='target',title=f'{toggle_age_chol} Distribution Over Target')
-            st.plotly_chart(fig1,use_max_width=True)
+            st.plotly_chart(fig1, use_container_width=True, config={"responsive": True})
         
     with col6:
         fig1=px.bar(df,y=['thalach','chol','trestbps'],x='target',color_discrete_sequence=['pink','grey','purple'],title='Distribution Over Thalach,Chol and Trestbps')
-        st.plotly_chart(fig1,use_max_width=True)
+        st.plotly_chart(fig1, use_container_width=True, config={"responsive": True})
     
     st.subheader('Heart Disease Discreption over thalach(Max heart rate) and age_group')
         
@@ -221,7 +224,7 @@ with datavisual:
     with col9:
         corr = df[['thalach', 'age', 'exang']].corr()
         fig = px.imshow(corr, text_auto=".2f", color_continuous_scale='RdBu',zmin=-1, zmax=1, title="Thalach, Age, and Exang Correlation")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig,  use_container_width=True, config={"responsive": True})
     
     with col10:
         st.markdown("&nbsp;" * 4, unsafe_allow_html=True)
@@ -248,12 +251,12 @@ with datavisual:
     st.pyplot(fig)
 
     fig4=px.scatter(df,x='age',y='thalach',color='target',title='Age-Thalach over target')
-    st.plotly_chart(fig4,use_container_width=True)
+    st.plotly_chart(fig4, use_container_width=True, config={"responsive": True})
 
     @st.cache_resource
     def load_3d_scatter(data):
             fig5=px.scatter_3d(df,x='age_group',y='chol',z='thalach',color='sex',hover_data='target',category_orders={'age_group':['0-10','10-20','20-30','30-40','40-50','50-60','60-70','70-80','80-90']},title='Age-group,Chol,Thalach 3D Interprecation')
-            st.plotly_chart(fig5, use_container_width=True)
+            st.plotly_chart(fig5, use_container_width=True, config={"responsive": True})
     if show_3D_plot:
         load_3d_scatter(df)
         
